@@ -29,7 +29,7 @@ class Zombie:
                 Zombie.images[name] = [load_image("./zombie/"+ name + " (%d)" % i + ".png") for i in range(1, 11)]
 
     def __init__(self):
-        self.x, self.y = random.randint(1600-800, 1600), 150
+        self.x, self.y = random.randint(800, 1600), 150
         self.load_images()
         self.frame = random.randint(0, 9)
         self.dir = random.choice([-1,1])
@@ -40,9 +40,9 @@ class Zombie:
         self.x += RUN_SPEED_PPS * self.dir * game_framework.frame_time
         if self.x > 1600:
             self.dir = -1
-        elif self.x < 800:
+        elif self.x < 0:
             self.dir = 1
-        self.x = clamp(800, self.x, 1600)
+        self.x = clamp(0, self.x, 1600)
         pass
 
 
@@ -51,8 +51,12 @@ class Zombie:
             Zombie.images['Walk'][int(self.frame)].composite_draw(0, 'h', self.x, self.y, 200, 200)
         else:
             Zombie.images['Walk'][int(self.frame)].draw(self.x, self.y, 200, 200)
+        draw_rectangle(*self.get_bb())
 
     def handle_event(self, event):
         pass
+
+    def get_bb(self):
+        return self.x - 50, self.y - 100, self.x+60,self.y+100
 
 

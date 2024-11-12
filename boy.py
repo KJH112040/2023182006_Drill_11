@@ -153,6 +153,7 @@ class Boy:
     def draw(self):
         self.state_machine.draw()
         self.font.draw(self.x-10, self.y + 50, f'{self.ball_count:02d}', (255, 255, 0))
+        draw_rectangle(*self.get_bb())
 
     def fire_ball(self):
         if self.ball_count > 0:
@@ -162,8 +163,14 @@ class Boy:
 
     def get_bb(self):
         # fill here
+        if self.state_machine.cur_state==Idle: return  self.x -20,self.y-50,self.x+20,self.y+50
+        if self.state_machine.cur_state==Sleep and self.face_dir==1: return self.x -70,self.y-40,self.x+10,self.y
+        if self.state_machine.cur_state==Sleep and self.face_dir==-1: return self.x-10,self.y-40,self.x+70,self.y
+        if self.state_machine.cur_state==Run: return  self.x -30,self.y-50,self.x+30,self.y+50
         pass
 
     def handle_collision(self, group, other):
         # fill here
+        if group == 'boy:ball':
+            self.ball_count+=1
         pass
