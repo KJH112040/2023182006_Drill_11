@@ -35,6 +35,7 @@ class Zombie:
         self.dir = random.choice([-1,1])
         self.hp =2
         self.font = load_font('ENCR10B.TTF', 60)
+        self.hp_bar = load_font('ENCR10B.TTF', 36)
         self.game_over=0
         self.size=2
 
@@ -56,6 +57,8 @@ class Zombie:
         else:
             Zombie.images['Walk'][int(self.frame)].draw(self.x, self.y, self.size*100, self.size*100)
         draw_rectangle(*self.get_bb())
+        if self.size==2:self.hp_bar.draw(self.x-50, self.y+100, f'Hp:{self.hp}', (255, 0, 0))
+        if self.size==1:self.hp_bar.draw(self.x-35, self.y+50, f'Hp:{self.hp}', (255, 0, 0))
         if self.game_over==1:self.font.draw(700,300,'GAME OVER',(255,0,0))
 
     def handle_event(self, event):
