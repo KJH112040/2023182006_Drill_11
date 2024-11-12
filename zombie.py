@@ -54,7 +54,7 @@ class Zombie:
         if self.dir < 0:
             Zombie.images['Walk'][int(self.frame)].composite_draw(0, 'h', self.x, self.y, self.size*100, self.size*100)
         else:
-            Zombie.images['Walk'][int(self.frame)].draw(self.x, self.y, 200, 200)
+            Zombie.images['Walk'][int(self.frame)].draw(self.x, self.y, self.size*100, self.size*100)
         draw_rectangle(*self.get_bb())
         if self.game_over==1:self.font.draw(700,300,'GAME OVER',(255,0,0))
 
@@ -63,11 +63,11 @@ class Zombie:
 
     def get_bb(self):
         if self.size==2:
-            if self.dir==1: return self.x - 50, self.y - 100, self.x+40,self.y+100
-            if self.dir==-1: return self.x - 40, self.y - 100, self.x+50,self.y+100
+            if self.dir==1: return self.x - 50, self.y - 100, self.x+30,self.y+100
+            if self.dir==-1: return self.x - 10, self.y - 100, self.x+50,self.y+100
         if self.size==1:
-            if self.dir==1: return self.x - 50, self.y - 100, self.x+40,self.y+100
-            if self.dir==-1: return self.x - 40, self.y - 100, self.x+50,self.y+100
+            if self.dir==1: return self.x - 30, self.y - 50, self.x+30,self.y+50
+            if self.dir==-1: return self.x - 20, self.y - 50, self.x+30,self.y+50
 
     def handle_collision(self, group, other):
         if group=='boy:zombie':
@@ -78,7 +78,7 @@ class Zombie:
             self.hp-=1
             if self.hp==1:
                 self.size -=1
-                self.y
+                self.y-=50
             pass
             if self.hp==0:
                 game_world.remove_object(self)
