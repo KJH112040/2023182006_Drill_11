@@ -31,18 +31,21 @@ def init():
     game_world.add_object(boy, 2)
 
     # fill here
-    zombie = [Zombie() for _ in range(5)]
-    game_world.add_objects(zombie,1)
+    zombies = [Zombie() for _ in range(5)]
+    game_world.add_objects(zombies,1)
 
     #global balls는 이제 필요 없음: 객체들끼리 알아서 처리하기 떄문
     balls =[Ball(random.randint(100,1600-100),60,0)for _ in range(30)]
     game_world.add_objects(balls,1)
 
     game_world.add_collision_pair('boy:ball',boy,None)
+    game_world.add_collision_pair('boy:zombie', boy, None)
     for ball in balls:
         game_world.add_collision_pair('boy:ball',None,ball)
 
-
+    for zombie in zombies:
+        game_world.add_collision_pair('boy:zombie',None,zombie)
+        game_world.add_collision_pair('ball:zombie', None, zombie)
 
 
 
